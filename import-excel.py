@@ -33,6 +33,9 @@ df2 = df.rename(
 # convert our timestamp to a datetime
 df2["updatetime"] = pd.to_datetime(df2["updatetime"])
 
+# make our new data time the index
+df2.set_index('updatetime', inplace=True)
+
 # append it to our DB
 df2.to_sql("solargeneration", engine, if_exists="append", index=False)
 
