@@ -37,7 +37,7 @@ df2["updatetime"] = pd.to_datetime(df2["updatetime"])
 df2.set_index("updatetime", inplace=True)
 
 # append it to our DB
-df2.to_sql("solargeneration", engine, if_exists="append", index=False)
+df2.to_sql("solargeneration", engine, if_exists="append")
 
 # print the date of the first/last entry in this file
 print("start: " + str(df2.index[0].date()))
