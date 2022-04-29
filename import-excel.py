@@ -39,5 +39,6 @@ df2.set_index("updatetime", inplace=True)
 # append it to our DB
 df2.to_sql("solargeneration", engine, if_exists="append", index=False)
 
-# print the date of the last entry
-print(df2.iloc[-1:, 0].dt.date)
+# print the date of the first/last entry in this file
+print("start: " + str(df2.index[0].date()))
+print("end: " + str(df2.index[-1].date()))
