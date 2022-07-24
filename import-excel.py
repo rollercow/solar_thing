@@ -26,7 +26,7 @@ df2 = df.rename(
         "total yield(kWh)": "totalyield",
         "feed-in energy(kWh)": "feedin",
         "consume energy(kWh)": "consumed",
-        "Inverter Statue": "status",
+        "Inverter Status": "status",
     }
 )
 
