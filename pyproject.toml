@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "solar_thing"
+version = "0.1"
+description = "Converts SolaX Excel files into something comparible to smart meter readings"
+authors = ["Chris Jones <c.jones@swansea.ac.uk>"]
+license = "MIT"
+readme = "README.md"
+packages = [{include = "solar_thing"}]
+
+[tool.poetry.dependencies]
+python = ">=3.10,<3.12"
+pandas = "^1.5.3"
+xlrd = "^2.0.1"
+SQLAlchemy = "<2.0"
+psycopg2-binary = "^2.9.5"
+scipy = "^1.10.1"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
