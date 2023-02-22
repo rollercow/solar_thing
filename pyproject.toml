@@ -2,7 +2,7 @@
 name = "solar_thing"
 version = "0.1"
 description = "Converts SolaX Excel files into something comparible to smart meter readings"
-authors = ["Chris Jones <c.jones@swansea.ac.uk>"]
+authors = ["Chris Jones <chris@brasskipper.org.uk>"]
 license = "MIT"
 readme = "README.md"
 packages = [{include = "solar_thing"}]
