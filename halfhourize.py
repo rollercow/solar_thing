@@ -2,6 +2,12 @@ from datetime import timedelta
 import pandas as pd
 from sqlalchemy import create_engine
 
+# my Solax inverter seems to over estimate its lifetime power output by about
+#  5% compared to the meter, this allows us to adjust for that later
+solaxTotalGen = 10325.9
+meterTotalGen = 9851.5
+totalGenScale = meterTotalGen / solaxTotalGen
+
 # connect to our DB
 engine = create_engine("postgresql://@/chris")
 
@@ -55,7 +61,9 @@ for day in df.index.to_period("D").unique():
     realYeild = daySlice["dayyeild"].max()
     estYeild = meterLikeData.sum()
     # work out the ratio between calculated and real yeild
-    dailyYeildRatio = (realYeild * 1000) / estYeild
+    # scaled to adjust for total generation according to the meter rather
+    # than the inverter
+    dailyYeildRatio = ((realYeild * 1000) * totalGenScale) / estYeild
     # print our ratio
     # print(str(day) + " - " + str(dailyYeildRatio))
     # scale our days data based on the ratio
