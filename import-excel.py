@@ -21,6 +21,7 @@ df2 = df.rename(
         "AC voltage (V)": "voltac",
         "AC current(A)": "ampac",
         "output power(W)": "wattac",
+        "AC Power (W)": "wattac",
         "feed-in power(W)": "wattexport",
         "daily yield(kWh)": "dayyeild",
         "total yield(kWh)": "totalyield",
@@ -37,7 +38,7 @@ df2["updatetime"] = pd.to_datetime(df2["updatetime"])
 df2.set_index("updatetime", inplace=True)
 
 # append it to our DB
-df2.to_sql("solargeneration", engine, if_exists="append")
+df2.to_sql("solar_generation", engine, if_exists="append")
 
 # print the date of the first/last entry in this file
 print("start: " + str(df2.index[0].date()))
