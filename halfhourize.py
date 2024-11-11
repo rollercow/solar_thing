@@ -13,7 +13,7 @@ engine = create_engine("postgresql://@/chris")
 
 # Pull back the imported excel data from the table we aggregate it in
 df = pd.read_sql(
-    "select distinct updatetime, wattac, dayyeild from solargeneration",
+    "select distinct updatetime, wattac, dayyeild from solar_generation",
     engine,
     index_col="updatetime",
 ).sort_index()
@@ -73,4 +73,4 @@ for day in df.index.to_period("D").unique():
 
 solarMeterEquiv = pd.concat(halfHourGen)
 # write it out to the DB
-solarMeterEquiv.to_sql("metersolargen", engine, if_exists="replace")
+solarMeterEquiv.to_sql("solar_meter", engine, if_exists="append")
