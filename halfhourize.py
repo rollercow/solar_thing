@@ -33,14 +33,14 @@ def makeHalfHour(DaysData):
     # get a timestamp for the day
     thisDay = DaysData.index.to_period("D")[0].to_timestamp()
     # build a new index with an entry per min that we can add
-    oneMinRangeIndex = pd.date_range(thisDay, periods=1440, freq="1T")
+    oneMinRangeIndex = pd.date_range(thisDay, periods=1440, freq="1min")
     oneMinFrame = pd.concat([newDaysData, pd.DatetimeIndex.to_frame(oneMinRangeIndex)])
     # interpolate to improve the resampleing to a 30min timebase
     # devide by two so we end up with a value in kWh
     return (
         oneMinFrame.sort_index()["wattac"]
         .interpolate(method="pchip", limit_area="inside")
-        .resample("30T")
+        .resample("30min")
         .mean()
         / 2
     )
