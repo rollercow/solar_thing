@@ -9,10 +9,7 @@ create table solarGeneration (
 	voltAC NUMERIC(4,1),
 	ampAC NUMERIC(3,1),
 	wattAC smallint,
-	wattExport smallint,
 	dayYeild NUMERIC(3,1),
 	totalYield NUMERIC(6,1),
-	feedIn NUMERIC(6,1),
-	consumed NUMERIC(6,1),
 	status text
 );

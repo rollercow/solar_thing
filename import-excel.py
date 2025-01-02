@@ -8,27 +8,33 @@ df = pd.read_excel(sys.argv[1], skiprows=4)
 # connect to our DB
 engine = create_engine("postgresql://@/chris")
 
+# make column names lowercase first
+df.columns = df.columns.str.lower()
 # rewrite the columb headers to match our DB
 df2 = df.rename(
     columns={
         "update time": "updatetime",
-        "PV1 voltage (V)": "voltpv1",
-        "PV1 current (A)": "amppv1",
-        "PV1 input power(W)": "wattpv1",
-        "PV2 voltage (V)": "voltpv2",
-        "PV2 current (A)": "amppv2",
-        "PV2 input power(W)": "wattpv2",
-        "AC voltage (V)": "voltac",
-        "AC current(A)": "ampac",
-        "output power(W)": "wattac",
-        "AC Power (W)": "wattac",
-        "feed-in power(W)": "wattexport",
-        "daily yield(kWh)": "dayyeild",
-        "total yield(kWh)": "totalyield",
-        "feed-in energy(kWh)": "feedin",
-        "consume energy(kWh)": "consumed",
-        "Inverter Status": "status",
-        "Inverter Statue": "status",
+        "pv1 voltage (v)": "voltpv1",
+        "pv1 current (a)": "amppv1",
+        "pv1 input power(w)": "wattpv1",
+        "pv1 power (w)": "wattpv1",
+        "pv2 voltage (v)": "voltpv2",
+        "pv2 current (a)": "amppv2",
+        "pv2 input power(w)": "wattpv2",
+        "pv2 power (w)": "wattpv2",
+        "ac voltage (v)": "voltac",
+        "ac voltage l (v)": "voltac",
+        "ac current(a)": "ampac",
+        "ac current l (a)": "ampac",
+        "output power(w)": "wattac",
+        "ac power (w)": "wattac",
+        "ac power l (w)": "wattac",
+        "daily yield(kwh)": "dayyeild",
+        "daily inverter output (kwh)": "dayyeild",
+        "total yield(kwh)": "totalyield",
+        "total inverter output (kwh)": "totalyield",
+        "inverter status": "status",
+        "inverter statue": "status",
     }
 )
 
@@ -39,7 +45,7 @@ df2["updatetime"] = pd.to_datetime(df2["updatetime"])
 df2.set_index("updatetime", inplace=True)
 
 # append it to our DB
-df2.to_sql("solar_generation", engine, if_exists="append")
+df2[['updatetime', 'amppv1', 'voltpv1', 'wattpv1', 'amppv2', 'voltpv2','wattpv2', 'ampac', 'voltac', 'wattac', 'dayyeild', 'totalyield','status']].to_sql("solar_generation", engine, if_exists="append")
 
 # print the date of the first/last entry in this file
 print("start: " + str(df2.index[0].date()))
