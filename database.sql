@@ -1,4 +1,4 @@
-create table solarGeneration (
+create table solar_generation (
 	updateTime timestamp without time zone,
 	voltPV1 NUMERIC(4,1),
 	ampPV1 NUMERIC(3,1),
@@ -10,6 +10,6 @@ create table solarGeneration (
 	ampAC NUMERIC(3,1),
 	wattAC smallint,
 	dayYeild NUMERIC(3,1),
-	totalYield NUMERIC(6,1),
+	totalYield NUMERIC(9,1),
 	status text
 );
