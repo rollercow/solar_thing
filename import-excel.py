@@ -45,7 +45,7 @@ df2["updatetime"] = pd.to_datetime(df2["updatetime"])
 df2.set_index("updatetime", inplace=True)
 
 # append it to our DB
-df2[['updatetime', 'amppv1', 'voltpv1', 'wattpv1', 'amppv2', 'voltpv2','wattpv2', 'ampac', 'voltac', 'wattac', 'dayyeild', 'totalyield','status']].to_sql("solar_generation", engine, if_exists="append")
+df2[['amppv1', 'voltpv1', 'wattpv1', 'amppv2', 'voltpv2','wattpv2', 'ampac', 'voltac', 'wattac', 'dayyeild', 'totalyield','status']].to_sql("solar_generation", engine, if_exists="append")
 
 # print the date of the first/last entry in this file
 print("start: " + str(df2.index[0].date()))
