@@ -5,6 +5,10 @@ import sys
 # read in the excel data dump, ignoring the crap in the frist 4 rows
 df = pd.read_excel(sys.argv[1], skiprows=4)
 
+if all(not str(col).startswith("PV") for col in df.columns):
+    df = pd.read_excel(sys.argv[1], skiprows=1)
+
+
 # connect to our DB
 engine = create_engine("postgresql://@/chris")
 
@@ -45,7 +49,22 @@ df2["updatetime"] = pd.to_datetime(df2["updatetime"])
 df2.set_index("updatetime", inplace=True)
 
 # append it to our DB
-df2[['amppv1', 'voltpv1', 'wattpv1', 'amppv2', 'voltpv2','wattpv2', 'ampac', 'voltac', 'wattac', 'dayyeild', 'totalyield','status']].to_sql("solar_generation", engine, if_exists="append")
+df2[
+    [
+        "amppv1",
+        "voltpv1",
+        "wattpv1",
+        "amppv2",
+        "voltpv2",
+        "wattpv2",
+        "ampac",
+        "voltac",
+        "wattac",
+        "dayyeild",
+        "totalyield",
+        "status",
+    ]
+].to_sql("solar_generation", engine, if_exists="append")
 
 # print the date of the first/last entry in this file
 print("start: " + str(df2.index[0].date()))
