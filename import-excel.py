@@ -4,17 +4,16 @@ import sys
 
 # read in the excel data dump, ignoring the crap in the frist 4 rows
 df = pd.read_excel(sys.argv[1], skiprows=4)
-
+#only now its only 1 row... so suppor that too
 if all(not str(col).startswith("PV") for col in df.columns):
     df = pd.read_excel(sys.argv[1], skiprows=1)
-
 
 # connect to our DB
 engine = create_engine("postgresql://@/chris")
 
 # make column names lowercase first
 df.columns = df.columns.str.lower()
-# rewrite the columb headers to match our DB
+# rewrite the column headers to match our DB
 df2 = df.rename(
     columns={
         "update time": "updatetime",
@@ -39,8 +38,19 @@ df2 = df.rename(
         "total inverter output (kwh)": "totalyield",
         "inverter status": "status",
         "inverter statue": "status",
+        "mppt1 voltage (v)": "voltpv1",
+        "mppt1 current (a)": "amppv1",
+        "mppt1 power (w)": "wattpv1",
+        "mppt2 voltage (v)": "voltpv2",
+        "mppt2 current (a)": "amppv2",
+        "mppt2 power (w)": "wattpv2",
+        "ac current (a)": "ampac",
+        "device working condition": "status",
     }
 )
+
+#sometimes theres a . at the end of updatetime, remove it
+df2["updatetime"] = df2['updatetime'].str.strip('.')
 
 # convert our timestamp to a datetime
 df2["updatetime"] = pd.to_datetime(df2["updatetime"])
